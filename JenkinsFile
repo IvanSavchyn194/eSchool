@@ -15,12 +15,10 @@ pipeline{
                 }
             }
         }
-        stage('Sonar analysis'){
+        stage("Build"){
             steps{
                 withMaven(maven : 'maven3'){
-                    withSonarQubeEnv('sonar6'){
-                        sh 'mvn sonar:sonar'
-                    }
+                    sh 'mvn package -Dmaven.test.skip=true'
                 }
             }
         }
