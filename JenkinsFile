@@ -18,11 +18,8 @@ pipeline{
         }
         stage("Deploy"){
             steps{
-                  sshagent(['eSchool_prod']) {
-                       sh "sudo systemctl stop eSchool_restart.service -S"
-                       sh "mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool${date +"%FT%T"}.jar"
-                       sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool_pipe/target/eschool.jar azureuser@20.106.155.225 /home/azureuser/eSchool"
-                       sh "sudo systemctl start eSchool_restart.service"
+                  sshPublisher(publishers: [sshPublisherDesc(configName: 'eSchool_prod', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''sudo systemctl stop eSchool_restart.service
+mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool$(date +"%FT%T").jar''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: ''), sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sudo systemctl start eSchool_restart.service', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/*.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
                   }
             }
         }
