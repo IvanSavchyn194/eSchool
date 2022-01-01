@@ -19,7 +19,7 @@ pipeline{
         stage("Deploy"){
             steps{
                   sshagent(['eSchool_prod']) {
-                       sh "sudo systemctl stop eSchool_restart.service -o StrictHostKeyChecking=no"
+                       sh "sudo systemctl stop eSchool_restart.service -S"
                        sh "mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool${date +"%FT%T"}.jar"
                        sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool_pipe/target/eschool.jar azureuser@20.106.155.225 /home/azureuser/eSchool"
                        sh "sudo systemctl start eSchool_restart.service"
