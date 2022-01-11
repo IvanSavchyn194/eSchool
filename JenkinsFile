@@ -20,7 +20,7 @@ pipeline{
             steps{
                  transfers:[
                            sshTransfer(
-                           execCommand: "sudo systemctl stop eSchool.service mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool$(date +"%FT%T").jar"
+                           execCommand: "sudo systemctl stop eSchool.service"
                            ),
                            sshTransfer(
                            sourceFiles:"${target/*.jar}, ${/home/azureuser/eSchool}/${eschool.jar}",
