@@ -13,10 +13,10 @@ pipeline{
             }
         }
         stage("Build"){
-        environment {
-      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
-      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
-   }
+                       environment {
+                       DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+                       DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+                       }
             steps{
                     sh "echo spring.datasource.username=${env.DATASOURCE_USERNAME} >> ./src/main/resources/application.properties"
                     sh "echo spring.datasource.password=${env.DATASOURCE_PASSWORD} >> ./src/main/resources/application.properties"
@@ -33,7 +33,7 @@ pipeline{
                   execTimeout: 120000,
                   ),
                   sshTransfer(cleanRemote: false, excludes: '', 
-                  execCommand: "sudo systemctl start eSchool.service", 
+                  execCommand: 'sudo systemctl start eSchool.service', 
                   execTimeout: 120000, 
                   removePrefix: 'target', 
                   sourceFiles: 'target/*.jar')], 
