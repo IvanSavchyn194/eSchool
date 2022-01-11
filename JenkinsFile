@@ -22,7 +22,7 @@ pipeline{
                  [sshPublisherDesc(configName: 'eSchool_prod', 
                  transfers: 
                  [sshTransfer(cleanRemote: false, excludes: '', 
-                 execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool${BUILD_ID}.jar''', 
+                 execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%FT%T").jar''', 
                   execTimeout: 120000,
                   ), 
                   sshTransfer(cleanRemote: false, excludes: '', 
