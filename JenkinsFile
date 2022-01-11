@@ -18,8 +18,17 @@ pipeline{
         }
         stage("Deploy"){
             steps{
-                    
-                    sh 'ssh -i /etc/ssh/eschool.pem azureuser@52.255.206.220 sudo systemctl stop nginx'
+                 transfers:[
+                           sshTransfer(
+                           execCommand: "sudo systemctl stop eSchool.service mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool$(date +"%FT%T").jar"
+                           ),
+                           sshTransfer(
+                           sourceFiles:"${target/*.jar}, ${/home/azureuser/eSchool}/${eschool.jar}",
+                           removePrefix: "${target}",
+                           remoteDirectory: "${/home/azureuser/eSchool}",
+                           execCommand: "sudo systemctl start eSchool.service"
+                           )
+                           ])  
                     }
         }
     }
