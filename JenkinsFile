@@ -30,15 +30,15 @@ pipeline{
                  execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar''', 
                   execTimeout: 120000,
                   ),
+                   sshTransfer(cleanRemote: false, excludes: '', 
+                  execCommand: '''export DATASOURCE_USERNAME=${env.DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${env.DATASOURCE_PASSWORD}''',
+                  execTimeout: 120000,
+                  ),
                   sshTransfer(cleanRemote: false, excludes: '', 
                   execCommand: 'sudo systemctl start eSchool.service', 
                   execTimeout: 120000, 
                   removePrefix: 'target', 
                   sourceFiles: 'target/*.jar')], 
-                  ),
-                   sshTransfer(cleanRemote: false, excludes: '', 
-                  execCommand: '''export DATASOURCE_USERNAME=${env.DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${env.DATASOURCE_PASSWORD}''',
-                  execTimeout: 120000,
                   )
                   ])
                     }
