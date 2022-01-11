@@ -24,6 +24,10 @@ pipeline{
             }
         }
         stage("Deploy"){
+        environment {
+      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+   }
             steps{
                  sshPublisher(publishers: 
                  [sshPublisherDesc(configName: 'eSchool_prod', 
