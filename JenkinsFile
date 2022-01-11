@@ -31,7 +31,7 @@ pipeline{
                   execTimeout: 120000,
                   ),
                   sshTransfer(cleanRemote: false, excludes: '', 
-                  execCommand: '''export DATASOURCE_USERNAME=${DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}''', 
+                  execCommand: '''export DATASOURCE_USERNAME=${env.DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${env.DATASOURCE_PASSWORD}''', 
                   execTimeout: 120000,
                   ),
                   sshTransfer(cleanRemote: false, excludes: '', 
