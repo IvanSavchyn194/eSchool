@@ -18,8 +18,8 @@ pipeline{
       DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
    }
             steps{
-                    sh "export ${DATASOURCE_USERNAME} = ${env.DATASOURCE_USERNAME}"
-                    sh "export ${DATASOURCE_PASSWORD} = ${env.DATASOURCE_PASSWORD}"
+                    sh "export DATASOURCE_USERNAME=${env.DATASOURCE_USERNAME}"
+                    sh "export DATASOURCE_PASSWORD=${env.DATASOURCE_PASSWORD}"
                     sh 'mvn package -Dmaven.test.skip=true'
             }
         }
