@@ -1,6 +1,10 @@
 pipeline{
     agent any
     stages{
+    environment {
+      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+   }
         stage('compile'){
             steps{
                     sh 'mvn clean compile'
