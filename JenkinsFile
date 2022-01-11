@@ -26,8 +26,8 @@ pipeline{
       DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
    }
             steps{
-                    sh "echo spring.datasource.username=${env.DATASOURCE_USERNAME} >> application.property"
-                    sh "echo spring.datasource.password=${env.DATASOURCE_PASSWORD} >> application.property"
+                    sh "echo spring.datasource.username=${env.DATASOURCE_USERNAME} >> application.properties"
+                    sh "echo spring.datasource.password=${env.DATASOURCE_PASSWORD} >> application.properties"
                     sh 'mvn package -Dmaven.test.skip=true'
             }
         }
