@@ -23,7 +23,8 @@ pipeline{
                  transfers: 
                  [sshTransfer(cleanRemote: false, excludes: '', 
                  execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool$(date +"%FT%T").jar''', 
-                  execTimeout: 120000, 
+                  execTimeout: 120000,
+                  ), 
                   sshTransfer(cleanRemote: false, excludes: '', 
                   execCommand: 'sudo systemctl start eSchool.service', 
                   execTimeout: 120000, 
