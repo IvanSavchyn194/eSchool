@@ -29,7 +29,7 @@ pipeline{
                  [sshPublisherDesc(configName: 'eSchool_prod', 
                  transfers: 
                  [sshTransfer(cleanRemote: false, excludes: '', 
-                 execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar''', 
+                 execCommand: '''export DATASOURCE_USERNAME=${env.DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${env.DATASOURCE_PASSWORD} | sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar''', 
                   execTimeout: 120000,
                   ), 
                   sshTransfer(cleanRemote: false, excludes: '', 
