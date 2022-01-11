@@ -3,11 +3,19 @@ pipeline{
     stages{
    
         stage('compile'){
+         environment {
+      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+   }
             steps{
                     sh 'mvn clean compile'
             }
         }
         stage('test'){
+         environment {
+      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+   }
             steps{
                     sh 'mvn test -Dtest=!academy.softserve.eschool.*.*IntegrationTest'
             }
@@ -22,6 +30,10 @@ pipeline{
             }
         }
         stage("Deploy"){
+         environment {
+      DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+      DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
+   }
             steps{
                  sshPublisher(publishers: 
                  [sshPublisherDesc(configName: 'eSchool_prod', 
