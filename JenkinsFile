@@ -19,10 +19,7 @@ pipeline{
         stage("Deploy"){
             steps{
                     sh 'ssh -i /etc/ssh/eschool.pem azureuser@52.255.206.220 sudo systemctl stop nginx'
-                  sshPublisher(publishers: [sshPublisherDesc(configName: 'eSchool_prod', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: '''
-                  mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool$(date +"%FT%T").jar''', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: ''), sshTransfer(cleanRemote: false, excludes: '', execCommand: 'sudo systemctl start eSchool.service', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: 'target', sourceFiles: 'target/*.jar')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-            
-            }
+                    }
         }
     }
 }
