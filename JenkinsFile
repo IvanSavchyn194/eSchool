@@ -19,8 +19,9 @@ pipeline{
         }
         stage("Deploy"){
             steps{
-                 
-                 sh 'sudo ssh -i /etc/ssh/eschool_prod.pem -o StrictHostKeyChecking=no azureuser@20.123.162.147 mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar'
+                 sshagent(['eschool-prod']) {
+                   sh "scp -o StrictHostKeyChecking=no /target/eschool.jar azureuser@20.123.162.147:/home/azureuser/eSchool"
+                 }
             }       
         }
     }
