@@ -18,28 +18,14 @@ pipeline{
                        DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
                        }
             steps{
-                    sh "echo spring.datasource.username=${env.DATASOURCE_USERNAME} >> ./src/main/resources/application.properties"
-                    sh "echo spring.datasource.password=${env.DATASOURCE_PASSWORD} >> ./src/main/resources/application.properties"
                     sh 'mvn package -Dmaven.test.skip=true'
             }
         }
         stage("Deploy"){
             steps{
-                 sshPublisher(publishers: 
-                 [sshPublisherDesc(configName: 'eSchool_prod', 
-                 transfers: 
-                 [sshTransfer(cleanRemote: false, excludes: '', 
-                 execCommand: '''sudo systemctl stop eSchool.service | mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar | export DATASOURCE_USERNAME=${DATASOURCE_USERNAME} | export DATASOURCE_PASSWORD=${DATASOURCE_PASSWORD}''', 
-                  execTimeout: 120000,
-                  ),
-                  sshTransfer(cleanRemote: false, excludes: '', 
-                  execCommand: 'sudo systemctl start eSchool.service', 
-                  execTimeout: 120000, 
-                  removePrefix: 'target', 
-                  sourceFiles: 'target/*.jar')], 
-                  )
-                  ])
-                    }
+                 
+                 sh 'sudo ssh -i /etc/ssh/eschool_prod.pem azureuser@20.123.162.147 mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar'
+                 
         }
     }
 }
