@@ -21,6 +21,7 @@ pipeline{
             steps{
                  sshagent(['eschool-prod']) { 
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-Pipeline/target/eschool.jar azureuser@20.123.162.147:/home/azureuser/eSchool"
+                    sh "ssh -i /etc/ssh/eschool_prod.pem azureuser@20.123.162.147 sudo systemctl restart eSchool.service"
                     sh "ssh -i /etc/ssh/eschool_prod.pem azureuser@20.123.162.147 /home/azureuser/eSchool/service-restart.sh"
                  }
             }       
