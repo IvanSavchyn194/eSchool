@@ -13,10 +13,6 @@ pipeline{
             }
         }
         stage("Build"){
-                       environment {
-                       DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
-                       DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
-                       }
             steps{
                     sh 'mvn package -Dmaven.test.skip=true'
             }
