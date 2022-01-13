@@ -25,7 +25,9 @@ pipeline{
             }       
         }
         stage('Remote SSH') {
-             sshCommand remote: remote, command: "sudo systemctl restart eSchool.service"
-             }
+            steps{
+                 sshCommand remote: remote, command: "sudo systemctl restart eSchool.service"
+                }
+            } 
     }
 }
