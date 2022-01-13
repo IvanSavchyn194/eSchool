@@ -20,9 +20,9 @@ pipeline{
         stage("Deploy"){
             steps{
                  sshagent(['eschool-prod']) {
-                   sh "sudo systemctl stop eSchool.service -o StrictHostKeyChecking=no azureuser@20.123.162.147"
+                   sh "systemctl stop eSchool.service -o StrictHostKeyChecking=no azureuser@20.123.162.147"
                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-Pipeline/target/eschool.jar azureuser@20.123.162.147:/home/azureuser/eSchool"
-                   sh "sudo systemctl start eSchool.service -o StrictHostKeyChecking=no azureuser@20.123.162.147"
+                   sh "systemctl start eSchool.service -o StrictHostKeyChecking=no azureuser@20.123.162.147"
                  }
             }       
         }
