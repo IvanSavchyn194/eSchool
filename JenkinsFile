@@ -3,6 +3,8 @@ pipeline{
     environment {
     SECRET_IP = credentials('eschool_IP')
     SECRET_USERNAME = credentials('eschool_username')
+    DATASOURCE_USERNAME = credentials('DATASOURCE_USERNAME')
+    DATASOURCE_PASSWORD = credentials('DATASOURCE_PASSWORD')
     }
     stages{
    
@@ -25,6 +27,8 @@ pipeline{
             steps{
                  sshagent(['eschool-prod']) { 
                     sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eSchool.service"
+                    sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo export '${DATASOURCE_USERNAME}' ${DATASOURCE_USERNAME}"
+                    sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo export '${DATASOURCE_PASSWORD}' ${DATASOURCE_PASSWORD}"
                     sh 'ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar'
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-Pipeline/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eSchool"
                     sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
