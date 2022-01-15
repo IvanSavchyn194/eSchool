@@ -1,7 +1,7 @@
 pipeline{
     agent any
     environment {
-    SECRET_IP = credentials('eschool_IP')
+    SECRET_IP = credentials('eSchool-prod-IP')
     SECRET_USERNAME = credentials('eschool_username')
     }
     stages{
