@@ -16,6 +16,15 @@ pipeline{
                     sh 'mvn test -Dtest=!academy.softserve.eschool.*.*IntegrationTest'
             }
         }
+         stage('Sonar analysis'){
+            steps{
+                withMaven(maven : 'maven3'){
+                    withSonarQubeEnv('sonar6'){
+                        sh 'mvn sonar:sonar'
+                    }
+                }
+            }
+        }
         stage("Build"){
             steps{
                     sh 'mvn package -Dmaven.test.skip=true'
