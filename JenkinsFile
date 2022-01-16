@@ -24,10 +24,7 @@ pipeline{
                     withSonarQubeEnv(credentialsId: '${SONAR_LOGIN}', installationName: '${SONAR_IP}'){
                      sh 'mvn sonar:sonar'
                     }
-                    {
-  } 
-}
-            }
+           }         
         }
         stage("Build"){
             steps{
