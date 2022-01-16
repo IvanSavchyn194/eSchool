@@ -18,11 +18,10 @@ pipeline{
         }
          stage('Sonar analysis'){
             steps{
-                withMaven(maven : 'maven3'){
-                    withSonarQubeEnv('sonar6'){
-                        sh 'mvn sonar:sonar'
-                    }
-                }
+                    mvn sonar:sonar \
+                    -Dsonar.projectKey=eSchool \
+                    -Dsonar.host.url=http://20.108.44.173:9000 \
+                    -Dsonar.login=dabb568383fdf3baa3f76c71265998a7f98a40e2
             }
         }
         stage("Build"){
