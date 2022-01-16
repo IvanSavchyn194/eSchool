@@ -3,6 +3,7 @@ pipeline{
     environment {
     SECRET_IP = credentials('eSchool-prod-IP')
     SECRET_USERNAME = credentials('eschool_username')
+    SONAR_IP = credentials('sonar-IP')
     }
     stages{
    
@@ -20,7 +21,7 @@ pipeline{
             steps{
                     mvn sonar:sonar \
                     -Dsonar.projectKey=eSchool \
-                    -Dsonar.host.url=http://20.108.44.173:9000 \
+                    -Dsonar.host.url=${SONAR_IP} \
                     -Dsonar.login=dabb568383fdf3baa3f76c71265998a7f98a40e2
             }
         }
