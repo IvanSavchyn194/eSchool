@@ -17,9 +17,11 @@ pipeline{
             }
         }
         stage('SonarQube Analysis') {
-            def mvn = tool 'Default Maven';
-                withSonarQubeEnv('sq1') {
-                    sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=eschool"
+             steps{
+                def mvn = tool 'Default Maven';
+                    withSonarQubeEnv('sq1') {
+                        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=eschool"
+                }
             }
         }
         stage("Quality Gate"){
