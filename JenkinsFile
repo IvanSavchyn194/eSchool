@@ -19,7 +19,7 @@ pipeline{
         stage('SonarQube analysis') {
             steps {
                 withSonarQubeEnv(installationName: 'sq1') { 
-                sh "mvn sonar:sonar -Dsonar.projectKey=eschool"
+                sh 'mvn sonar:sonar'
                 }
             }
         }
