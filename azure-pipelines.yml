@@ -20,11 +20,12 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'clean package'
-- task: AzureWebApp@1
+- task: AzureRmWebAppDeployment@4
   inputs:
+    ConnectionType: 'AzureRM'
     azureSubscription: 'Azure subscription 1(7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)'
     appType: 'webAppLinux'
-    appName: 'eschooltest'
-    package: '$(System.DefaultWorkingDirectory)/**/*.jar'
-    runtimeStack: 'JAVA|8-jre8'
-    startUpCommand: 'java -jar eschool.jar'
+    WebAppName: 'eschooltest'
+    packageForLinux: '$(System.DefaultWorkingDirectory)/**/*.jar'
+    RuntimeStack: 'JAVA|8-jre8'
+    StartupCommand: 'java -jar eschool.jar'
