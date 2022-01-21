@@ -19,7 +19,10 @@ pipeline{
        
         stage("Build"){
             steps{
-                    sh 'mvn package -Dmaven.test.skip=true'
+                sh 'sed -i -r -e "s/(DATASOURCE_USERNAME:).*(\})/\1${DB_USERNAME}\2/" \
+                              -e "s/(DATASOURCE_PASSWORD:).*(\})/\1${DB_PASSWORD}\2/" \
+                              ./src/main/resources/application.properties'    
+                sh 'mvn package -Dmaven.test.skip=true'
             }
         }
         stage("Publish to Azure") {
