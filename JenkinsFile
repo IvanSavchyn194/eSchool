@@ -16,29 +16,21 @@ pipeline{
                 sh 'mvn test -Dtest=!academy.softserve.eschool.*.*IntegrationTest'
             }
         }
-        stage('SonarQube Analysis') {
-             steps{
-                    withSonarQubeEnv('sq2'){
-                        sh 'mvn sonar:sonar'
-                    
-                }
-            }
-        }
        
         stage("Build"){
             steps{
                     sh 'mvn package -Dmaven.test.skip=true'
             }
         }
-        stage("Deploy"){
-            steps{
-                 sshagent(['eschool-prod']) { 
-                    sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eSchool.service"
-                    sh 'ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar'
-                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eSchool"
-                    sh "ssh -i /etc/ssh/eschool_prod.pem ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
-                 }
-            }       
+        stage("Publish to Azure") {
+            steps {
+                azureWebAppPublish appName: "eschooltest",
+                    azureCredentialsId: "c394124b-5b95-41a0-82fc-08a9916e0d95",
+                    publishType: "file",
+                    filePath: "**/*.*",
+                    resourceGroup: "vm",
+                    sourceDirectory: "Default Directory (vanjasav194gmail.onmicrosoft.com)"
+            }
         }
     }
 }
