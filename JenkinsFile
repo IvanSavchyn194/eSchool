@@ -34,7 +34,12 @@ pipeline{
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eSchool"
                     sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
                 }
-            }       
+            }
+            step{
+                azureWebAppPublish azureCredentialsId: 'c394124b-5b95-41a0-82fc-08a9916e0d95',
+                   resourceGroup: 'VM', appName: 'eschooltest',
+                   filePath: '*.jar', sourceDirectory: 'target', targetDirectory: 'webapps'
+            }
         }
     }
 }
