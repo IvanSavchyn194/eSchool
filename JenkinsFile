@@ -35,6 +35,8 @@ pipeline{
                     sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
                 }
             }
+        }
+        stage("Deploy Web App"){
             step{
                 azureWebAppPublish azureCredentialsId: 'c394124b-5b95-41a0-82fc-08a9916e0d95',
                    resourceGroup: 'VM', appName: 'eschooltest',
