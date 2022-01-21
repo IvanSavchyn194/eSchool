@@ -21,8 +21,8 @@ pipeline{
        
         stage("Build"){
             steps{
-                sh 'sed -i "/(DATASOURCE_USERNAME:)=/ s/=.*/=${DB_USERNAME}/" ./src/main/resources/application.properties'
-                sh 'sed -i "/(DATASOURCE_PASSWORD:)=/ s/=.*/=${DB_PASSWORD}/" ./src/main/resources/application.properties'  
+                sh 'sed -i "s/\(DATASOURCE_USERNAME:=\).*\$/\1${DB_USERNAME}/" ./src/main/resources/application.properties'
+                sh 'sed -i "s/\(DATASOURCE_PASSWORD:=\).*\$/\1${DB_PASSWORD}/" ./src/main/resources/application.properties'
                 sh 'mvn package -Dmaven.test.skip=true'
             }
         }
