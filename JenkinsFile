@@ -38,7 +38,7 @@ pipeline{
         }
         stage("Deploy Web App"){
             steps{
-                azureWebAppPublish azureCredentialsId: 'c394124b-5b95-41a0-82fc-08a9916e0d95',
+                azureWebAppPublish azureCredentialsId: '3f84318c-b162-413e-a519-5e0b4d1aaab4',
                    resourceGroup: 'VM', appName: 'eschooltest',
                    filePath: '*.jar', sourceDirectory: 'target', targetDirectory: 'webapps'
             }
