@@ -21,8 +21,8 @@ pipeline{
        
         stage("Build"){
             steps{
-                sh 'sed -i 's/spring.datasource.username=/spring.datasource.username=${DB_USERNAME}/' ./src/main/resources/application.properties'
-                sh 'sed -i 's/spring.datasource.password=/spring.datasource.password=${DB_USERNAME}/' ./src/main/resources/application.properties'
+                sh "sed -i 's/spring.datasource.username=/spring.datasource.username=${DB_USERNAME}/' ./src/main/resources/application.properties"
+                sh "sed -i 's/spring.datasource.password=/spring.datasource.password=${DB_USERNAME}/' ./src/main/resources/application.properties"
                 sh 'mvn package -Dmaven.test.skip=true'
             }
         }
