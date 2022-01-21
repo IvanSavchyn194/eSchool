@@ -38,12 +38,7 @@ pipeline{
         }
         stage("Publish to Azure") {
             steps {
-                azureWebAppPublish appName: "eschooltest",
-                    azureCredentialsId: "ServicePrincipal",
-                    publishType: "file",
-                    filePath: "**/*.*",
-                    resourceGroup: "VM",
-                    sourceDirectory: "target"
+                mvn package azure-webapp:deploy
             }
         }
     }
