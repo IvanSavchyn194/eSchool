@@ -36,11 +36,14 @@ pipeline{
                 }
             }
         }
-        stage("Deploy Web App"){
-            steps{
-                azureWebAppPublish azureCredentialsId: 'ServicePrincipal',
-                   resourceGroup: 'VM', appName: 'eschooltest',
-                   filePath: '*.jar', sourceDirectory: 'target', targetDirectory: 'webapps'
+        stage("Publish to Azure") {
+            steps {
+                azureWebAppPublish appName: "eschooltest",
+                    azureCredentialsId: "ServicePrincipal",
+                    publishType: "file",
+                    filePath: "**/*.*",
+                    resourceGroup: "VM",
+                    sourceDirectory: "target"
             }
         }
     }
