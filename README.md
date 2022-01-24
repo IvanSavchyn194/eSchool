@@ -1,5 +1,4 @@
 # eSchool
-1
 **eSchool** is a school management web application based on Spring Boot and developed as graduation project at SoftServe IT Academy.
 
 ## Core Features
