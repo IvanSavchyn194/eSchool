@@ -29,9 +29,9 @@ pipeline{
         stage("Deploy"){
             steps{
                 sshagent(['eschool-prod']) {
-                    sh "ssh -i /home/azureuser/azure_rsa ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eschool.service"
-                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-pipe/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/eschool/eschool"
-                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eschool.service"
+                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eSchool.service"
+                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-pipe/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eschool"
+                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
                 }
             }
         }
