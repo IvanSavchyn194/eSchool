@@ -29,7 +29,7 @@ pipeline{
         stage("Deploy"){
             steps{
                 sshagent(['eschool-prod']) {
-                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop ecchool.service"
+                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eschool.service"
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-pipe/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/eschool/eschool"
                     sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eschool.service"
                 }
