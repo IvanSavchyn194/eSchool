@@ -6,7 +6,6 @@
     <groupId>academy.softserve</groupId>
     <artifactId>eschool</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
 
     <!-- Inherit defaults from Spring Boot -->
     <parent>
