@@ -30,7 +30,6 @@ pipeline{
             steps{
                 sshagent(['eschool-prod']) {
                     sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eSchool.service"
-                    sh 'ssh ${SECRET_USERNAME}@${SECRET_IP} mv /home/azureuser/eSchool/eschool.jar /home/azureuser/eSchool/eSchool_bec/eschool_${BUILD_ID}_$(date +"%F_%T").jar'
                     sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eSchool"
                     sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
                 }
