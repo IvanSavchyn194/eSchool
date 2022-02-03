@@ -30,19 +30,6 @@ steps:
     PathtoPublish: '$(Build.ArtifactStagingDirectory)'
     ArtifactName: 'drop'
     publishLocation: 'Container'
-- task: PackerBuild@1
-  inputs:
-    templateType: 'builtin'
-    ConnectedServiceName: 'Azure subscription 1(1)(7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)'
-    isManagedImage: false
-    location: 'westeurope'
-    storageAccountName: 'eschoolstorage'
-    azureResourceGroup: 'VM'
-    baseImageSource: 'default'
-    baseImage: 'Canonical:UbuntuServer:18.04-LTS:linux'
-    packagePath: '$(System.DefaultWorkingDirectory)/**/eschool.jar'
-    deployScriptPath: 'eschool.jar'
-    imageUri: 'vmss-test'
 - task: AzureVmssDeployment@0
   inputs:
     azureSubscription: 'Azure subscription 1(1)(7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)'
