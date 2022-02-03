@@ -20,6 +20,16 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(system.defaultworkingdirectory)'
+    Contents: '**/*.jar'
+    TargetFolder: '$(build.artifactstagingdirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
 - task: PackerBuild@1
   inputs:
     templateType: 'builtin'
@@ -30,7 +40,7 @@ steps:
     azureResourceGroup: 'VM'
     baseImageSource: 'default'
     baseImage: 'Canonical:UbuntuServer:18.04-LTS:linux'
-    packagePath: '$(System.DefaultWorkingDirectory)*.jar'
+    packagePath: '$(System.DefaultWorkingDirectory)/_IvanSavchyn194.eSchool/drop/target/eschool.jar'
     deployScriptPath: 'deploy.sh'
     imageUri: 'vmss-test'
 - task: AzureVmssDeployment@0
