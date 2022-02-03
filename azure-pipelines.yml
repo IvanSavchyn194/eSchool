@@ -41,7 +41,7 @@ steps:
     baseImageSource: 'default'
     baseImage: 'Canonical:UbuntuServer:18.04-LTS:linux'
     packagePath: '$(System.DefaultWorkingDirectory)/**/eschool.jar'
-    deployScriptPath: 'deploy.sh'
+    deployScriptPath: 'eschool.jar'
     imageUri: 'vmss-test'
 - task: AzureVmssDeployment@0
   inputs:
