@@ -7,7 +7,7 @@ trigger:
 - develop
 
 pool:
-  vmImage: ubuntu-18.04
+  vmImage: windows-2019
 
 steps:
 - task: Maven@3
@@ -19,7 +19,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'package -Dmaven.test.skip=true'
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1 (7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)-1565'
