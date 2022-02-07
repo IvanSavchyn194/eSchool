@@ -8,5 +8,3 @@ wget -P /home/azureuser/eschool https://eschoolstorage.blob.core.windows.net/esc
 sudo wget -P /etc/systemd/system https://eschoolstorage.blob.core.windows.net/eschool/eschool.service
 sudo systemctl daemon-reload
 sudo systemctl enable eschool.service
-sudo systemctl start eschool.service
-
