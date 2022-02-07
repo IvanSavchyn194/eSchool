@@ -7,7 +7,7 @@ trigger:
 - develop
 
 pool:
-  vmImage: windows-2019
+  vmImage: ubuntu-18.04
 
 steps:
 - task: Maven@3
@@ -20,13 +20,6 @@ steps:
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-- task: AzureFileCopy@4
-  inputs:
-    SourcePath: '$(System.DefaultWorkingDirectory)/**/*.jar'
-    azureSubscription: 'Azure subscription 1 (7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)-1565'
-    Destination: 'AzureBlob'
-    storage: 'eschoolstorage'
-    ContainerName: 'eschool'
 - task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure subscription 1 (7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)-1565'
