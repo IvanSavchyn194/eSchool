@@ -27,9 +27,9 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
       az vmss extension set \
-          --name customScript \
-          --protected-settings {"fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh"} \
           --publisher Microsoft.Azure.Extensions \
-          --resource-group VM-group \
           --version 2.0 \
-          --vmss-name eschool-vmss-test-vmss
+          --name CustomScript \
+          --resource-group VM \
+          --vmss-name eschool-vmss-test \
+          --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }'
