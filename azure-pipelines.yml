@@ -39,3 +39,4 @@ steps:
           --resource-group VM \
           --vmss-name eschool-vmss-test \
           --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }' 
+      az vmss extension upgrade -g VM -n eschool-vmss-test
