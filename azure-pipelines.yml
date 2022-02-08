@@ -30,6 +30,6 @@ steps:
           --name customScript \
           --protected-settings {"fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh"} \
           --publisher Microsoft.Azure.Extensions \
-          --resource-group VM \
+          --resource-group VM-group \
           --version 2.0 \
-          --vmss-name eschool-vmss-test
+          --vmss-name eschool-vmss-test-vmss
