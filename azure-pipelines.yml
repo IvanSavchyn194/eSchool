@@ -26,6 +26,7 @@ steps:
     azureSubscription: 'Azure-Devops'
     scriptLocation: 'inlineScript'
     inlineScript: |
+      az vmss extension delete --name CustomScript --resource-group VM --vmss-name eschool-vmss-test
       az storage blob upload --account-name eschoolstorage --account-key B+Nkz7OdNAOIoCGKtye/2A8JwYeqdG2A6GTY6wXWEQcq0phn173F+lCAIohmfSwBtdR7gRBqA9yo34cPlxxzTQ== --container-name eschool --file $(system.defaultworkingdirectory)/**/eschool.jar 
       az vmss extension set \
           --publisher Microsoft.Azure.Extensions \
