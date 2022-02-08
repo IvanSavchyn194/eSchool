@@ -23,7 +23,7 @@ steps:
 
 - task: AzureCLI@1
   inputs:
-    azureSubscription: 'azure-devops'
+    azureSubscription: 'Azure-Devops'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az vmss extension set \
