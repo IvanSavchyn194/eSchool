@@ -38,5 +38,5 @@ steps:
           --name CustomScript \
           --resource-group VM \
           --vmss-name eschool-vmss-test \
-          --enable-auto-upgrade {true} \
+          --enable-auto-upgrade true \
           --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }' 
