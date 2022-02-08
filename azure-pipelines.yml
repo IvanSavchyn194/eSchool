@@ -23,7 +23,7 @@ steps:
 
 - task: AzureCLI@1
   inputs:
-    azureSubscription: 'Azure subscription 1 (7c4ca187-f32c-4894-b2b8-f35fe76aa5f1)-1565'
+    azureSubscription: 'azure-devops'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az vmss extension set \
@@ -31,5 +31,5 @@ steps:
           --version 2.0 \
           --name CustomScript \
           --resource-group VM \
-          --vmss-name vmss-eschool-test \
+          --vmss-name eschool-vmss-test \
           --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }'
