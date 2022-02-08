@@ -26,8 +26,9 @@ steps:
     scriptLocation: 'inlineScript'
     inlineScript: |
        az storage blob upload -c eschool -f $(system.defaultworkingdirectory)/**/eschool.jar
-           --account-name eschoolstorage
-           --account-key B+Nkz7OdNAOIoCGKtye/2A8JwYeqdG2A6GTY6wXWEQcq0phn173F+lCAIohmfSwBtdR7gRBqA9yo34cPlxxzTQ==
+           --account-name eschoolstorage \
+           --connection-string DefaultEndpointsProtocol=https;AccountName=eschoolstorage;AccountKey=B+Nkz7OdNAOIoCGKtye/2A8JwYeqdG2A6GTY6wXWEQcq0phn173F+lCAIohmfSwBtdR7gRBqA9yo34cPlxxzTQ==;EndpointSuffix=core.windows.net \
+           --account-key B+Nkz7OdNAOIoCGKtye/2A8JwYeqdG2A6GTY6wXWEQcq0phn173F+lCAIohmfSwBtdR7gRBqA9yo34cPlxxzTQ== \
 - task: AzureCLI@1
   inputs:
     azureSubscription: 'Azure-Devops'
