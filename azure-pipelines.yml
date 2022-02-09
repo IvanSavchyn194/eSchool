@@ -10,6 +10,18 @@ pool:
   vmImage: ubuntu-18.04
 
 steps:
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'Azure-Devops'
+    KeyVaultName: 'keys-jenkins'
+    SecretsFilter: '*'
+    RunAsPreJob: true
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      sed -i 's/{DATASOURCE_USERNAME:}/{DATASOURCE_USERNAME:${db-username}}/' ./eSchool/src/main/resources/application.properties
+      sed -i 's/{DATASOURCE_PASSWORD:}/{DATASOURCE_PASSWORD:${db-password}}/' ./eSchool/src/main/resources/application.properties
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
