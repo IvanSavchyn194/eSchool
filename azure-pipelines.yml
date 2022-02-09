@@ -20,7 +20,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      ll
+      ls -a
       sed -i 's/{DATASOURCE_USERNAME:}/{DATASOURCE_USERNAME:${db-username}}/' /~/eSchool/src/main/resources/application.properties
       sed -i 's/{DATASOURCE_PASSWORD:}/{DATASOURCE_PASSWORD:${db-password}}/' /~/eSchool/src/main/resources/application.properties
 - task: Maven@3
