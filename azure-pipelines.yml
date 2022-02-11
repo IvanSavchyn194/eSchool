@@ -31,7 +31,7 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package -Dmaven.test.skip=true'
+    goals: 'package'
 
 - task: AzureCLI@1
   inputs:
