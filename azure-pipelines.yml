@@ -40,8 +40,8 @@ steps:
     inlineScript: |
       az vmss extension delete \
           --name CustomScript \
-          --resource-group VM \
-          --vmss-name eschool-vmss-test
+          --resource-group vmss-eschool-rg \
+          --vmss-name vmss-eschool
       az storage blob upload \
           --account-name eschoolstorage \
           --account-key $(storage-key) \
@@ -51,6 +51,6 @@ steps:
           --publisher Microsoft.Azure.Extensions \
           --version 2.0 \
           --name CustomScript \
-          --resource-group VM \
-          --vmss-name eschool-vmss-test \
+          --resource-group vmss-eschool-rg \
+          --vmss-name vmss-eschool \
           --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }' 
