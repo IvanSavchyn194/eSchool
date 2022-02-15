@@ -33,9 +33,10 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 
-- task: AzureCLI@1
+- task: AzureCLI@2
   inputs:
     azureSubscription: 'Azure-Devops'
+    scriptType: 'bash'
     scriptLocation: 'inlineScript'
     inlineScript: |
       az vmss extension delete \
@@ -53,4 +54,4 @@ steps:
           --name $(extension-name) \
           --resource-group $(resource-group-name) \
           --vmss-name $(vmss-name) \
-          --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }' 
+          --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }'
