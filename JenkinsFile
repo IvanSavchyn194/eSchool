@@ -1,39 +1,39 @@
 pipeline{
     agent any
+    environment {
+    SECRET_IP = credentials('eSchool-IP')
+    SECRET_USERNAME = credentials('escool-user')
+    DB_USERNAME = credentials('db-username')
+    DB_PASSWORD = credentials('db-password')
+    }
     stages{
+   
         stage('compile'){
             steps{
-                withMaven(maven : 'maven3'){
                     sh 'mvn clean compile'
-                }
             }
         }
         stage('test'){
             steps{
-                withMaven(maven : 'maven3'){
-                    sh 'mvn test -Dtest=!academy.softserve.eschool.*.*IntegrationTest'
-                }
+                sh 'mvn test -Dtest=!academy.softserve.eschool.*.*IntegrationTest'
             }
         }
-        stage('Sonar analysis'){
+       
+        stage("Build"){
             steps{
-                withMaven(maven : 'maven3'){
-                    withSonarQubeEnv('sonar6'){
-                        sh 'mvn sonar:sonar'
-                    }
-                }
+                sh """sed -i 's/{DATASOURCE_USERNAME:}/{DATASOURCE_USERNAME:${DB_USERNAME}}/' ./src/main/resources/application.properties"""
+                sh """sed -i 's/{DATASOURCE_PASSWORD:}/{DATASOURCE_PASSWORD:${DB_PASSWORD}}/' ./src/main/resources/application.properties"""
+                sh 'mvn package -Dmaven.test.skip=true'
             }
         }
-    }
-    post {
-        always {
-            archiveArtifacts artifacts: '**/*.jar', onlyIfSuccessful: true
-        }
-        success {
-            setBuildStatus("Build succeeded", "SUCCESS");
-        }
-        failure {
-            setBuildStatus("Build failed", "FAILURE");
+        stage("Deploy"){
+            steps{
+                sshagent(['eschool-prod']) {
+                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl stop eSchool.service"
+                    sh "scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/eSchool-pipe/target/eschool.jar ${SECRET_USERNAME}@${SECRET_IP}:/home/azureuser/eschool"
+                    sh "ssh ${SECRET_USERNAME}@${SECRET_IP} sudo systemctl start eSchool.service"
+                }
+            }
         }
     }
 }

@@ -1,0 +1,57 @@
+# Maven
+# Build your Java project and run tests with Apache Maven.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/java
+
+trigger:
+- develop
+
+pool:
+  vmImage: ubuntu-18.04
+
+steps:
+- task: AzureKeyVault@2
+  inputs:
+    azureSubscription: 'Azure-Devops'
+    KeyVaultName: 'keys-jenkins'
+    SecretsFilter: '*'
+    RunAsPreJob: true
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      sed -i 's/{DATASOURCE_USERNAME:}/{DATASOURCE_USERNAME:$(db-username)}/' ./src/main/resources/application.properties
+      sed -i 's/{DATASOURCE_PASSWORD:}/{DATASOURCE_PASSWORD:$(db-password)}/' ./src/main/resources/application.properties
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.8'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'package'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'Azure-Devops'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az vmss extension delete \
+          --name $(extension-name) \
+          --resource-group $(resource-group-name) \
+          --vmss-name $(vmss-name)
+      az storage blob upload \
+          --account-name $(storage-name) \
+          --account-key $(storage-key) \
+          --container-name $(storage-container-name) \
+          --file $(system.defaultworkingdirectory)/**/eschool.jar 
+      az vmss extension set \
+          --publisher Microsoft.Azure.Extensions \
+          --version 2.0 \
+          --name $(extension-name) \
+          --resource-group $(resource-group-name) \
+          --vmss-name $(vmss-name) \
+          --settings '{ "fileUris": ["https://eschoolstorage.blob.core.windows.net/eschool/update.sh"], "commandToExecute": "./update.sh" }'
